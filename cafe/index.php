@@ -83,7 +83,10 @@
 			<table>
 				<tr>
 					<td><img src="images/AA.jpg" height=auto width="400"></td>
-					<td><p>Frank and Martha have been adding sweetness to their customers' lives since 2020.  Frank's recipes have been passed down from his mother and use simple and fresh ingredients to produce delightful flavors.  Both of them will personally greet you with a welcoming smile when you visit!</p></td>
+					<td><p>At Rooman Café, bhAAi have been adding a touch of sweetness to every cup since 2020.
+Frank’s cherished recipes—passed down from his mother—are crafted with fresh, simple ingredients that bring out comforting, nostalgic flavors. Whether you're stopping in for your morning coffee or an afternoon treat, you’ll be welcomed by Frank and Martha themselves, always ready with a smile and a warm hello. At Rooman Café, you’re more than a customer—you’re part of the family.
+
+</p></td>
 				</tr>
 			</table>
 			<hr>

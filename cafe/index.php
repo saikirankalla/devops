@@ -218,8 +218,8 @@
         <a href="#home"><i class="fas fa-home"></i> Home</a>
         <a href="#about"><i class="fas fa-info-circle"></i> About Us</a>
         <a href="#contact"><i class="fas fa-phone-alt"></i> Contact Us</a>
-        <a href="#menu"><i class="fas fa-utensils"></i> Menu</a>
-        <a href="#history"><i class="fas fa-history"></i> Order History</a>
+        <a href="menu.php"><i class="fas fa-utensils"></i> Menu</a>
+        <a href="orderHistory.php"><i class="fas fa-history"></i> Order History</a>
     </nav>
 
     <!-- Main Content -->
@@ -235,7 +235,7 @@
 
         <div class="feature-grid">
             <div class="feature-item">
-                <img src="https://media.istockphoto.com/id/995903748/photo/smoked-and-spicy-tandoori-chicken-grilling-with-smoke.jpg" alt="Spicy Tandoori Chicken">
+                <img src="https://i.ytimg.com/vi/k5UnydV3gyY/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLCYt2FXDDCRjmz7vC_r3fo2IXRJng" alt="Spicy Tandoori Chicken">
                 <p class="cursive-text">Frank’s rich variety of non-veg dishes!</p>
             </div>
             <div class="feature-item">

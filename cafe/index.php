@@ -78,12 +78,21 @@
 	<div id="aboutUs" class="center">
 		<hr>
 		<div>
-			<h2>About Us</h2>
+			<h2>☕ About Rooman Café</h2>
 		</div>
 			<table>
 				<tr>
 					<td><img src="images/Frank-Martha.jpg" height=auto width="400"></td>
-					<td><p>Frank and Martha have been adding sweetness to their customers' lives since 2020.  Frank's recipes have been passed down from his mother and use simple and fresh ingredients to produce delightful flavors.  Both of them will personally greet you with a welcoming smile when you visit!</p></td>
+					<td><p>Welcome to Rooman Café – your cozy escape from the chaos, where every sip feels like home.
+
+Born from the dreams of passionate coffee lovers and hospitality experts, Rooman Café is more than just a café – it’s a vibe, a culture, and a community. With over [X] years of experience in creating soulful spaces and flavors, our founders set out to build a place where conversations flow as smoothly as our lattes.
+
+Here, every cup is crafted with care, every plate tells a story, and every guest becomes part of the Rooman family. From handcrafted brews to our signature desserts, every detail is a blend of art and heart.
+
+Whether you’re working, unwinding, catching up with friends, or simply craving that perfect coffee moment – Rooman Café is your go-to sanctuary.
+
+🪴 Warm vibes. Rich aromas. Great company.
+Step in once, and you’ll always want to come back.</p></td>
 				</tr>
 			</table>
 			<hr>
@@ -99,7 +108,7 @@
 				<td><img src="images/Coffee-Shop.jpg" height=auto width="120"></td>
 			</tr>
 		</table>
-		<div><p>123 Any Street<br>Any Town, USA<br><br>Tel: +1-800-555-0193</p></div>
+		<div><p>123 Any Street<br>Any Town, USA<br><br>Tel: +1-7702124348</p></div>
 		<div>
 			<h3>Hours</h3>
 		</div>

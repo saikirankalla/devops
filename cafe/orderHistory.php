@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rooman Restaurant Order History Report</title>
+    <title>Rooman Restaurant Order History</title>
 
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -24,7 +24,6 @@
             overflow-x: hidden;
         }
 
-        /* Header */
         .main-header {
             background: linear-gradient(120deg, #ff3e3e, #ff8c00);
             color: #fff5e1;
@@ -37,7 +36,6 @@
             border-bottom: 4px solid #ff8c00;
         }
 
-        /* Navigation */
         .topnav {
             background: #222;
             padding: 1rem;
@@ -67,7 +65,6 @@
             margin-right: 0.5rem;
         }
 
-        /* Report Content */
         .report-content {
             max-width: 1000px;
             margin: 2rem auto;
@@ -142,7 +139,6 @@
             color: #666;
         }
 
-        /* Footer */
         .footer {
             background: #333;
             color: white;
@@ -152,13 +148,11 @@
             margin-top: 2rem;
         }
 
-        /* Animations */
         @keyframes slideIn {
             from { transform: translateY(-100%); opacity: 0; }
             to { transform: translateY(0); opacity: 1; }
         }
 
-        /* Responsive Design */
         @media (max-width: 768px) {
             .main-header { font-size: 2rem; padding: 1.5rem; }
             .topnav { flex-direction: column; padding: 0.5rem; }
@@ -174,7 +168,6 @@
             .order-header { font-size: 0.9rem; }
         }
 
-        /* Print Styles */
         @media print {
             .topnav, .footer { display: none; }
             body { background: none; }
@@ -196,77 +189,77 @@
 
     <!-- Report Content -->
     <div class="report-content">
-        <div class="report-title">Order History Report</div>
+        <div class="report-title">Order History</div>
 
         <?php
-        // Create a connection to the database.
-        $conn = new mysqli($db_url, $db_user, $db_password, $db_name);
+        // Static sample order data based on the 10-item menu
+        $currency = "$";
+        $sampleOrders = [
+            [
+                "order_number" => 1001,
+                "order_date_time" => "2025-04-08 18:30:00",
+                "order_total" => 42.23,
+                "items" => [
+                    ["product_id" => 1, "product_name" => "Tandoori Chicken", "price" => 12.99, "quantity" => 2, "item_amount" => 25.98],
+                    ["product_id" => 6, "product_name" => "Garlic Naan", "price" => 3.50, "quantity" => 3, "item_amount" => 10.50],
+                    ["product_id" => 9, "product_name" => "Raita", "price" => 2.99, "quantity" => 2, "item_amount" => 5.98]
+                ]
+            ],
+            [
+                "order_number" => 1002,
+                "order_date_time" => "2025-04-07 12:15:00",
+                "order_total" => 34.99,
+                "items" => [
+                    ["product_id" => 3, "product_name" => "Chicken Biryani", "price" => 13.75, "quantity" => 1, "item_amount" => 13.75],
+                    ["product_id" => 5, "product_name" => "Chicken Tikka Masala", "price" => 15.25, "quantity" => 1, "item_amount" => 15.25],
+                    ["product_id" => 7, "product_name" => "Chicken Soup", "price" => 5.99, "quantity" => 1, "item_amount" => 5.99]
+                ]
+            ],
+            [
+                "order_number" => 1003,
+                "order_date_time" => "2025-04-06 19:45:00",
+                "order_total" => 32.99,
+                "items" => [
+                    ["product_id" => 4, "product_name" => "Lamb Rogan Josh", "price" => 16.99, "quantity" => 1, "item_amount" => 16.99],
+                    ["product_id" => 8, "product_name" => "Keema Samosa", "price" => 4.75, "quantity" => 2, "item_amount" => 9.50],
+                    ["product_id" => 10, "product_name" => "Mutton Soup", "price" => 6.50, "quantity" => 1, "item_amount" => 6.50]
+                ]
+            ]
+        ];
 
-        // Check the connection.
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
-        }
+        if (!empty($sampleOrders)) {
+            foreach ($sampleOrders as $order) {
+                echo '<div class="order-section">';
+                echo '<div class="order-header">';
+                echo 'Order Number: <span>' . $order["order_number"] . '</span> | ';
+                echo 'Date: <span>' . substr($order["order_date_time"], 0, 10) . '</span> | ';
+                echo 'Time: <span>' . substr($order["order_date_time"], 11, 8) . '</span> | ';
+                echo 'Total Amount: <span>' . $currency . number_format($order["order_total"], 2) . '</span>';
+                echo '</div>';
 
-        // Retrieve all orders in the database.
-        $sql = "SELECT a.order_number, a.order_date_time, a.amount as order_total,
-                       b.order_item_number, b.product_id, b.quantity, b.amount as item_amount,
-                       c.product_name, c.price
-                FROM `order` a, order_item b, product c
-                WHERE a.order_number = b.order_number
-                  AND c.id = b.product_id
-                ORDER BY a.order_number DESC, b.order_item_number ASC";
+                echo '<table class="report-table">';
+                echo '<tr>';
+                echo '<th>Item</th>';
+                echo '<th>Price</th>';
+                echo '<th>Quantity</th>';
+                echo '<th>Amount</th>';
+                echo '</tr>';
 
-        $result = $conn->query($sql);
-        $currency = "$"; // Assuming USD, adjust as needed
-
-        if ($result->num_rows > 0) {
-            $previousOrderNumber = 0;
-            $firstTime = true;
-
-            while ($row = $result->fetch_assoc()) {
-                if ($row["order_number"] != $previousOrderNumber) {
-                    if (!$firstTime) {
-                        echo '</table>';
-                        echo '</div>'; // Close previous order-section
-                    }
-
-                    echo '<div class="order-section">';
-                    echo '<div class="order-header">';
-                    echo 'Order Number: <span>' . $row["order_number"] . '</span> | ';
-                    echo 'Date: <span>' . substr($row["order_date_time"], 0, 10) . '</span> | ';
-                    echo 'Time: <span>' . substr($row["order_date_time"], 11, 8) . '</span> | ';
-                    echo 'Total Amount: <span>' . $currency . number_format($row["order_total"], 2) . '</span>';
-                    echo '</div>';
-
-                    echo '<table class="report-table">';
+                foreach ($order["items"] as $item) {
                     echo '<tr>';
-                    echo '<th>Item</th>';
-                    echo '<th>Price</th>';
-                    echo '<th>Quantity</th>';
-                    echo '<th>Amount</th>';
+                    echo '<td>' . htmlspecialchars($item["product_name"]) . '</td>';
+                    echo '<td>' . $currency . number_format($item["price"], 2) . '</td>';
+                    echo '<td>' . htmlspecialchars($item["quantity"]) . '</td>';
+                    echo '<td>' . $currency . number_format($item["item_amount"], 2) . '</td>';
                     echo '</tr>';
-
-                    $previousOrderNumber = $row["order_number"];
-                    $firstTime = false;
                 }
 
-                echo '<tr>';
-                echo '<td>' . $row["product_name"] . '</td>';
-                echo '<td>' . $currency . number_format($row["price"], 2) . '</td>';
-                echo '<td>' . $row["quantity"] . '</td>';
-                echo '<td>' . $currency . number_format($row["item_amount"], 2) . '</td>';
-                echo '</tr>';
+                echo '</table>';
+                echo '</div>';
             }
-
-            // Close the last table and section
-            echo '</table>';
-            echo '</div>';
         } else {
-            echo '<p class="no-orders">No orders recorded at this time.</p>';
+            echo '<p class="no-orders">You have no orders at this time.</p>';
         }
-
-        // Close the connection.
-        $conn->close();
         ?>
     </div>
 

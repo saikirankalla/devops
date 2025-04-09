@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>Rooman Caf&eacute;!</title>
+	<title>Caf&eacute;!</title>
 	<link rel="stylesheet" href="css/styles.css">
 </head>
 

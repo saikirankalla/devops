@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>Caf&eacute;!</title>
+	<title>Rooman Restaurant</title>
 	<link rel="stylesheet" href="css/styles.css">
 </head>
 
@@ -10,9 +10,10 @@
 
 	<div id="header" class="mainHeader">
 		<hr>
-		<div class="center">Caf&eacute;</div>
+		<div class="center">Rooman Restaurant</div>
 	</div>
 	<br>
+
 	<?php
 		// Get the application environment parameters from the Parameter Store.
 		include ('getAppParameters.php');

@@ -26,13 +26,13 @@
 
         /* Updated Header */
         .main-header {
-            background: linear-gradient(120deg, #ff3e3e, #ff8c00); /* Fiery red-orange gradient */
-            color: #fff5e1; /* Creamy off-white for contrast */
+            background: linear-gradient(120deg, #ff3e3e, #ff8c00);
+            color: #fff5e1;
             padding: 2rem;
             text-align: center;
             font-family: 'Pacifico', cursive;
             font-size: 2.5rem;
-            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.4); /* Deeper shadow for depth */
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.4);
             animation: slideIn 1s ease-out;
         }
 
@@ -58,7 +58,7 @@
         }
 
         .topnav a:hover {
-            background: #ff8c00; /* Matching orange hover effect */
+            background: #ff8c00;
             transform: translateY(-3px);
         }
 
@@ -218,8 +218,8 @@
         <a href="#home"><i class="fas fa-home"></i> Home</a>
         <a href="#about"><i class="fas fa-info-circle"></i> About Us</a>
         <a href="#contact"><i class="fas fa-phone-alt"></i> Contact Us</a>
-        <a href="#menu"><i class="fas fa-utensils"></i> Menu</a>
-        <a href="#history"><i class="fas fa-history"></i> Order History</a>
+        <a href="menu.php"><i class="fas fa-utensils"></i> Menu</a>
+        <a href="orderHistory.php"><i class="fas fa-history"></i> Order History</a>
     </nav>
 
     <!-- Main Content -->
@@ -239,7 +239,8 @@
                 <p class="cursive-text">Frank’s rich variety of non-veg dishes!</p>
             </div>
             <div class="feature-item">
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQK6S3T1uURFUTOvrf7GpwhZ-OSzyPl8M9riQ&s" alt="Food Image">
+                <img src="https://media.tenor.com/MoDlBj4M2EAAAAAM/chicken.gif" alt="Animated Chicken Dish">
+                <p class="cursive-text">Sizzling flavors in every bite!</p>
             </div>
             <div class="feature-item">
                 <img src="https://cdn.uengage.io/uploads/7057/image-447364-1685524443.jpeg" alt="Non-Veg Soup">

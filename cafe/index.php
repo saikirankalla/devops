@@ -179,7 +179,7 @@
 
   <!-- Navigation -->
   <nav class="topnav">
-    <a href="#home"><i class="fas fa-home"></i> Home</a>
+    <a href="index.php"><i class="fas fa-home"></i> Home</a>
     <a href="#about"><i class="fas fa-info-circle"></i> About Us</a>
     <a href="#contact"><i class="fas fa-phone-alt"></i> Contact</a>
     <a href="menu.php"><i class="fas fa-utensils"></i> Menu</a>

@@ -215,7 +215,7 @@
 
   <!-- Header with GIFs -->
   <header class="main-header">
-    <img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExMTk5b2FmbnJuNmRiamJ6bWg3dnU5MnRoMnFhdGh2ejR1MnMxOHN1diZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/BiZ579FYeJkmOWEgmP/giphy.gif" alt="Chicken Left">
+    <img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExMTk5b2FmbnJuNmRiamJ6bWg3dnU5MnRoMnFhdGh2ejR1MnMxOHN1diZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/BiZ579FYeJkmOWEgmP/giphy.gif" alt="Chicken Left" >
     <h1>Rooman Restaurant</h1>
     <img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExMTk5b2FmbnJuNmRiamJ6bWg3dnU5MnRoMnFhdGh2ejR1MnMxOHN1diZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/BiZ579FYeJkmOWEgmP/giphy.gif" alt="Chicken Right">
   </header>
@@ -242,7 +242,7 @@
 
     <div class="feature-grid">
       <div class="feature-item">
-        <img src="https://media.istockphoto.com/id/995903748/photo/smoked-and-spicy-tandoori-chicken-grilling-with-smoke.jpg" alt="Spicy Tandoori Chicken">
+        <img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExYzZxaGxhcW9kN25jZGsza3ZiYWFtbThxbTM5b2ZnYnh3ZTc1cnY2ayZlcD12MV9naWZzX3NlYXJjaCZjdD1n/13U2NlgRx3QvMQ/200.webp" alt="Spicy Tandoori Chicken">
         <p class="cursive-text">Frank’s rich variety of non-veg dishes!</p>
       </div>
       <div class="feature-item">

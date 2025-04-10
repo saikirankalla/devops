@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Rooman Restaurant</title>
 
-  <!-- Font Awesome for icons -->
+  <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Pacifico&display=swap" rel="stylesheet">
 
@@ -33,15 +33,6 @@
       font-size: 2.5rem;
       text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.4);
       animation: slideIn 1s ease-out;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 1rem;
-    }
-
-    .main-header img {
-      width: 60px;
-      height: 60px;
     }
 
     .topnav {
@@ -69,10 +60,6 @@
       transform: translateY(-3px);
     }
 
-    .topnav a i {
-      margin-right: 0.5rem;
-    }
-
     .main-content {
       max-width: 1200px;
       margin: 2rem auto;
@@ -88,6 +75,8 @@
 
     .gallery-grid img {
       width: 100%;
+      height: 250px;
+      object-fit: cover;
       border-radius: 15px;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
       transition: transform 0.3s ease;
@@ -97,23 +86,16 @@
       transform: scale(1.05);
     }
 
-    .intro-text {
-      text-align: center;
-      padding: 2rem;
-      font-size: 1.2rem;
-      animation: fadeIn 1.5s ease-in;
-    }
-
     .feature-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      grid-template-columns: repeat(3, 1fr);
       gap: 1.5rem;
       margin: 2rem 0;
     }
 
     .feature-item {
       background: rgba(255, 255, 255, 0.9);
-      padding: 1.5rem;
+      padding: 1rem;
       border-radius: 10px;
       text-align: center;
       transition: transform 0.3s ease;
@@ -126,14 +108,9 @@
 
     .feature-item img {
       width: 100%;
-      max-width: 250px;
+      height: 200px;
+      object-fit: cover;
       border-radius: 10px;
-    }
-
-    .cursive-text {
-      font-family: 'Pacifico', cursive;
-      font-size: 1.3rem;
-      color: #d43f3a;
     }
 
     .section {
@@ -147,7 +124,6 @@
       color: #d43f3a;
       font-size: 2rem;
       margin-bottom: 1.5rem;
-      animation: fadeInUp 1s ease-out;
     }
 
     .about-grid {
@@ -181,50 +157,31 @@
       transform: scale(1.2);
     }
 
+    @media (max-width: 768px) {
+      .main-header { font-size: 2rem; }
+      .topnav { flex-direction: column; }
+      .about-grid { grid-template-columns: 1fr; }
+      .gallery-grid, .feature-grid { grid-template-columns: 1fr; }
+    }
+
     @keyframes slideIn {
       from { transform: translateY(-100%); opacity: 0; }
       to { transform: translateY(0); opacity: 1; }
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @media (max-width: 768px) {
-      .main-header { font-size: 2rem; padding: 1rem; flex-direction: column; gap: 0.5rem; }
-      .topnav { flex-direction: column; padding: 0.5rem; }
-      .about-grid { grid-template-columns: 1fr; }
-      .gallery-grid { grid-template-columns: 1fr; }
-      .feature-grid { grid-template-columns: 1fr; }
-    }
-
-    @media (max-width: 480px) {
-      .main-header { font-size: 1.5rem; }
-      .intro-text { font-size: 1rem; }
-      .section h2 { font-size: 1.5rem; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Header with GIFs -->
+  <!-- Header -->
   <header class="main-header">
-    <img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExMTk5b2FmbnJuNmRiamJ6bWg3dnU5MnRoMnFhdGh2ejR1MnMxOHN1diZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/BiZ579FYeJkmOWEgmP/giphy.gif" alt="Chicken Left" >
-    <h1>Rooman Restaurant</h1>
-    <img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExMTk5b2FmbnJuNmRiamJ6bWg3dnU5MnRoMnFhdGh2ejR1MnMxOHN1diZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/BiZ579FYeJkmOWEgmP/giphy.gif" alt="Chicken Right">
+    Rooman Restaurant
   </header>
 
   <!-- Navigation -->
   <nav class="topnav">
     <a href="#home"><i class="fas fa-home"></i> Home</a>
     <a href="#about"><i class="fas fa-info-circle"></i> About Us</a>
-    <a href="#contact"><i class="fas fa-phone-alt"></i> Contact Us</a>
+    <a href="#contact"><i class="fas fa-phone-alt"></i> Contact</a>
     <a href="menu.php"><i class="fas fa-utensils"></i> Menu</a>
     <a href="orderHistory.php"><i class="fas fa-history"></i> Order History</a>
   </nav>
@@ -233,25 +190,27 @@
   <main class="main-content">
     <div class="gallery-grid">
       <img src="https://static.vecteezy.com/system/resources/thumbnails/053/315/407/small_2x/sizzling-tandoori-chicken-indian-clay-oven-roast-spices-cilantro-lemons-onions-photo.jpeg" alt="Tandoori Chicken">
-      <img src="https://maunikagowardhan.co.uk/wp-content/uploads/2012/08/Tandoori-Chicken.jpg" alt="Hotel Balaji Dish">
+      <img src="https://www.allaboutsikhs.com/wp-content/uploads/2021/02/authentic-chicken-biryani.jpg" alt="Chicken Biryani">
     </div>
-
-    <p class="intro-text">
-      At <strong>Rooman Restaurant</strong>, we serve mouth-watering non-vegetarian delights crafted with rich spices and authentic flavors. From sizzling tandoori chicken to aromatic biryanis, every dish promises an unforgettable dining experience!
-    </p>
 
     <div class="feature-grid">
       <div class="feature-item">
-        <img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExYzZxaGxhcW9kN25jZGsza3ZiYWFtbThxbTM5b2ZnYnh3ZTc1cnY2ayZlcD12MV9naWZzX3NlYXJjaCZjdD1n/13U2NlgRx3QvMQ/200.webp" alt="Spicy Tandoori Chicken">
-        <p class="cursive-text">Frank’s rich variety of non-veg dishes!</p>
+        <img src="https://lifeloveandgoodfood.com/wp-content/uploads/2020/04/Chicken-Shawarma_09_1200x1200.jpg" alt="Shawarma">
       </div>
       <div class="feature-item">
-        <img src="https://media.tenor.com/MoDlBj4M2EAAAAAM/chicken.gif" alt="Animated Chicken Dish">
-        <p class="cursive-text">Sizzling flavors in every bite!</p>
+        <img src="https://i.ytimg.com/vi/naf0rfUjr_A/maxresdefault.jpg" alt="Butter Chicken">
       </div>
       <div class="feature-item">
-        <img src="https://cdn.uengage.io/uploads/7057/image-447364-1685524443.jpeg" alt="Non-Veg Soup">
-        <p class="cursive-text">Our non-veg soups are a customer favorite!</p>
+        <img src="https://www.whiskaffair.com/wp-content/uploads/2023/02/Shrimp-Masala-2-3-500x500.jpg" alt="Shrimp Masala">
+      </div>
+      <div class="feature-item">
+        <img src="https://1.bp.blogspot.com/-dmr7TvaMJ7c/WRyLh1RZjlI/AAAAAAAAIF4/uPHo3WFtctE8ZS34-s0mkRyNRkU-2-SzgCLcB/s1600/0000000000000000000000A%2B%25281%2529.jpg" alt="Tikka">
+      </div>
+      <div class="feature-item">
+        <img src="https://tse1.mm.bing.net/th?id=OIP.9u7G7tUjXLrSx8n4ZMdcLQHaE8&pid=Api&P=0&h=180" alt="Kebab">
+      </div>
+      <div class="feature-item">
+        <img src="https://cf-img-a-in.tosshub.com/sites/visualstory/wp/2023/11/egg-curry.jpg?size=*:900" alt="Egg Curry">
       </div>
     </div>
   </main>
@@ -260,7 +219,7 @@
   <section id="about" class="section">
     <h2>About Us</h2>
     <div class="about-grid">
-      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSh5Op4dtTEomIv2T2H6vsB4XToS3J7znkQQw&s" alt="About Image">
+      <img src="https://wikibio.in/wp-content/uploads/2017/12/Allu-Arjun-having-chicken-biryani.jpg">
       <p>
         At Rooman Restaurant, we’ve been serving comfort and flavor since 2020. Frank’s cherished recipes, handed down from his mother, are made with fresh ingredients to bring out nostalgic tastes. Stop by for a warm welcome from Frank and Martha—you’re family here!
       </p>
@@ -273,14 +232,13 @@
     <img src="https://rooman.com/wp-content/uploads/2024/03/Rooman-Logo-2.png" alt="Rooman Logo" width="120">
     <p>
       123 Any Street<br>
-      Any Town, USA<br><br>
+      Any Town, INDIA<br><br>
       Tel: +1-800-555-0193
     </p>
     <h3>Hours</h3>
     <p>
-      Weekdays: 6:00am - 6:00pm<br>
-      Saturday: 7:00am - 7:00pm<br>
-      Closed on Sundays
+      Weekdays: 11:00am - 10:00pm<br>
+      Weekend: 11:00am - 12:00pm<br>
     </p>
   </section>
 

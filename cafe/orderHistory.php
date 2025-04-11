@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Café Order History</title>
+  <title>Rooman Restaurant | Order History</title>
 
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -136,6 +136,17 @@
       text-align: center;
     }
 
+    .social-links a {
+      color: white;
+      margin: 0 1rem;
+      font-size: 1.5rem;
+      transition: all 0.3s ease;
+    }
+
+    .social-links a:hover {
+      transform: scale(1.2);
+    }
+
     @media (max-width: 768px) {
       .main-header { font-size: 2rem; }
       .topnav { flex-direction: column; }
@@ -153,12 +164,14 @@
 
   <!-- Header -->
   <header class="main-header">
-    Café
+    Rooman Restaurant
   </header>
 
   <!-- Navigation -->
   <nav class="topnav">
     <a href="index.php"><i class="fas fa-home"></i> Home</a>
+    <a href="#about"><i class="fas fa-info-circle"></i> About Us</a>
+    <a href="#contact"><i class="fas fa-phone-alt"></i> Contact</a>
     <a href="menu.php"><i class="fas fa-utensils"></i> Menu</a>
     <a href="orderHistory.php" class="active"><i class="fas fa-history"></i> Order History</a>
   </nav>
@@ -246,7 +259,13 @@
 
   <!-- Footer -->
   <footer class="footer">
-    <h5>© 2020, Amazon Web Services, Inc. or its Affiliates. All rights reserved.</h5>
+    <h5>© 2025, Rooman Restaurant. All rights reserved.</h5>
+    <div class="social-links" style="margin-top: 1rem;">
+      <a href="https://www.facebook.com" target="_blank"><i class="fab fa-facebook"></i></a>
+      <a href="https://www.instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+      <a href="https://www.twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+      <a href="https://www.youtube.com" target="_blank"><i class="fab fa-youtube"></i></a>
+    </div>
   </footer>
 
 </body>

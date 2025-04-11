@@ -1,3 +1,41 @@
+<?php
+// Start a session to track user data
+session_start();
+
+// Database connection (update with your credentials)
+$servername = "localhost";
+$username = "your_username"; // Replace with your database username
+$password = "your_password"; // Replace with your database password
+$dbname = "rooman_restaurant"; // Replace with your database name
+
+try {
+    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    die("Connection failed: " . $e->getMessage());
+}
+
+// Initialize message variable for feedback
+$message = isset($_SESSION['message']) ? $_SESSION['message'] : "";
+unset($_SESSION['message']); // Clear the message after displaying
+
+// Fetch all orders
+try {
+    $stmt = $conn->prepare("
+        SELECT o.order_id, o.order_date, o.total,
+               oi.product_id, oi.product_name, oi.price, oi.quantity, oi.subtotal
+        FROM orders o
+        LEFT JOIN order_items oi ON o.order_id = oi.order_id
+        ORDER BY o.order_date DESC, oi.id ASC
+    ");
+    $stmt->execute();
+    $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    $message = "Error fetching orders: " . $e->getMessage();
+    $orders = [];
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -129,6 +167,13 @@
       margin: 2rem 0;
     }
 
+    .message {
+      text-align: center;
+      margin: 1rem 0;
+      font-size: 1.1em;
+      color: #d43f3a;
+    }
+
     .footer {
       background: #333;
       color: white;
@@ -182,47 +227,26 @@
       <p>Order History</p>
     </div>
 
+    <?php if (!empty($message)): ?>
+      <p class="message"><?php echo htmlspecialchars($message); ?></p>
+    <?php endif; ?>
+
     <?php
-    // Get the application environment parameters from the Parameter Store.
-    include ('getAppParameters.php');
-
-    // Display the server metadata information if the showServerInfo parameter is true.
-    include('serverInfo.php');
-
-    // Create a connection to the database.
-    $conn = new mysqli($db_url, $db_user, $db_password, $db_name);
-
-    // Check the connection.
-    if ($conn->connect_error) {
-      die("Connection failed: " . $conn->connect_error);
-    }
-
-    // Retrieve all orders in the database.
-    $sql = "SELECT a.order_number, a.order_date_time, a.amount as order_total,
-                   b.order_item_number, b.product_id, b.quantity, b.amount as item_amount,
-                   c.product_name, c.price
-            FROM `order` a, order_item b, product c
-            WHERE a.order_number = b.order_number
-              AND c.id = b.product_id
-            ORDER BY a.order_number DESC, b.order_item_number ASC";
-
-    $result = $conn->query($sql);
-
-    if ($result->num_rows > 0) {
-      $previousOrderNumber = 0;
-      $firstTime = true;
-
-      while ($row = $result->fetch_assoc()) {
-        if ($row["order_number"] != $previousOrderNumber) {
-          if (!$firstTime) {
+    if (!empty($orders)) {
+      $current_order_id = null;
+      foreach ($orders as $row) {
+        if ($row['order_id'] !== $current_order_id) {
+          // Close previous table if not the first order
+          if ($current_order_id !== null) {
             echo '</table>';
             echo '</div>'; // Close previous order-container
           }
 
+          // Start new order container
           echo '<div class="order-container">';
           echo '<div class="order-header">';
-          echo 'Order Number: ' . $row["order_number"] . '     Date: ' . substr($row["order_date_time"], 0, 10)
-               . '     Time: ' . substr($row["order_date_time"], 11, 8) . '     Total Amount: ' . $currency . number_format($row["order_total"], 2);
+          echo 'Order ID: ' . htmlspecialchars($row['order_id']) . '     Date: ' . htmlspecialchars(substr($row['order_date'], 0, 10)) 
+               . '     Time: ' . htmlspecialchars(substr($row['order_date'], 11, 8)) . '     Total Amount: $' . number_format($row['total'], 2);
           echo '</div>';
 
           echo '<table class="order-table">';
@@ -233,27 +257,28 @@
           echo '<th>Amount</th>';
           echo '</tr>';
 
-          $previousOrderNumber = $row["order_number"];
-          $firstTime = false;
+          $current_order_id = $row['order_id'];
         }
 
-        echo '<tr>';
-        echo '<td>' . $row["product_name"] . '</td>';
-        echo '<td>' . $currency . $row["price"] . '</td>';
-        echo '<td>' . $row["quantity"] . '</td>';
-        echo '<td>' . $currency . number_format($row["item_amount"], 2) . '</td>';
-        echo '</tr>';
+        // Only display items if they exist (non-null product_id)
+        if ($row['product_id']) {
+          echo '<tr>';
+          echo '<td>' . htmlspecialchars($row['product_name']) . '</td>';
+          echo '<td>$' . number_format($row['price'], 2) . '</td>';
+          echo '<td>' . htmlspecialchars($row['quantity']) . '</td>';
+          echo '<td>$' . number_format($row['subtotal'], 2) . '</td>';
+          echo '</tr>';
+        }
       }
 
       // Close the last table and container
-      echo '</table>';
-      echo '</div>';
+      if ($current_order_id !== null) {
+        echo '</table>';
+        echo '</div>';
+      }
     } else {
       echo '<p class="no-orders">You have no orders at this time.</p>';
     }
-
-    // Close the connection
-    $conn->close();
     ?>
   </main>
 

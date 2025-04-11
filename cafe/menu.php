@@ -1,3 +1,87 @@
+<?php
+// Start a session to track user data if needed
+session_start();
+
+// Database connection (update with your credentials)
+$servername = "localhost";
+$username = "your_username"; // Replace with your database username
+$password = "your_password"; // Replace with your database password
+$dbname = "rooman_restaurant"; // Replace with your database name
+
+try {
+    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    die("Connection failed: " . $e->getMessage());
+}
+
+// Initialize message variable for feedback
+$message = "";
+
+// Process form submission
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $total = 0;
+    $order_details = [];
+    
+    // Loop through submitted items
+    for ($i = 0; $i < count($_POST['productId']); $i++) {
+        $product_id = $_POST['productId'][$i];
+        $product_name = $_POST['productName'][$i];
+        $price = $_POST['price'][$i];
+        $quantity = $_POST['quantity'][$i];
+        
+        if ($quantity > 0) {
+            $subtotal = $price * $quantity;
+            $total += $subtotal;
+            $order_details[] = [
+                'product_id' => $product_id,
+                'product_name' => $product_name,
+                'price' => $price,
+                'quantity' => $quantity,
+                'subtotal' => $subtotal
+            ];
+        }
+    }
+    
+    if ($total > 0) {
+        // Insert order into database
+        try {
+            // Generate a unique order ID
+            $order_id = uniqid('order_');
+            $order_date = date('Y-m-d H:i:s');
+            
+            // Insert into orders table
+            $stmt = $conn->prepare("INSERT INTO orders (order_id, order_date, total) VALUES (:order_id, :order_date, :total)");
+            $stmt->execute([
+                ':order_id' => $order_id,
+                ':order_date' => $order_date,
+                ':total' => $total
+            ]);
+            
+            // Insert order items
+            $stmt = $conn->prepare("INSERT INTO order_items (order_id, product_id, product_name, price, quantity, subtotal) 
+                                  VALUES (:order_id, :product_id, :product_name, :price, :quantity, :subtotal)");
+            foreach ($order_details as $item) {
+                $stmt->execute([
+                    ':order_id' => $order_id,
+                    ':product_id' => $item['product_id'],
+                    ':product_name' => $item['product_name'],
+                    ':price' => $item['price'],
+                    ':quantity' => $item['quantity'],
+                    ':subtotal' => $item['subtotal']
+                ]);
+            }
+            
+            $message = "Order placed successfully! Order ID: $order_id";
+        } catch (PDOException $e) {
+            $message = "Error placing order: " . $e->getMessage();
+        }
+    } else {
+        $message = "Please select at least one item.";
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -80,7 +164,7 @@
 
     .menu-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr); /* 3 items per row */
+      grid-template-columns: repeat(3, 1fr);
       gap: 1.5rem;
     }
 
@@ -90,7 +174,7 @@
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
       padding: 1rem;
       text-align: center;
-      height: 450px; /* Fixed height for uniformity */
+      height: 450px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -104,7 +188,7 @@
 
     .menu-item img {
       width: 100%;
-      height: 200px; /* Fixed image height */
+      height: 200px;
       object-fit: cover;
       border-radius: 10px;
     }
@@ -174,6 +258,17 @@
       transform: scale(1.2);
     }
 
+    .message {
+      text-align: center;
+      margin: 1rem 0;
+      font-size: 1.1em;
+      color: #d43f3a;
+    }
+
+    .center {
+      text-align: center;
+    }
+
     @media (max-width: 768px) {
       .main-header { font-size: 2rem; }
       .topnav { flex-direction: column; }
@@ -204,7 +299,12 @@
 
   <!-- Main Content with Menu -->
   <main class="main-content">
-    <form id="orderForm" action="#" method="post" onsubmit="return validateOrder()">
+    <!-- Display message if set -->
+    <?php if (!empty($message)): ?>
+      <div class="message"><?php echo htmlspecialchars($message); ?></div>
+    <?php endif; ?>
+
+    <form id="orderForm" action="menu.php" method="post" onsubmit="return validateOrder()">
       <!-- Non-Veg Specialties Section -->
       <div class="menu-section">
         <h2>Non-Veg Specialties</h2>

@@ -1,11 +1,66 @@
-version: 0.0
-os: linux
-files:
-  - source: /
-    destination: /var/www/html/
+name: Deploy to ECS
 
-hooks:
-  AfterInstall:
-    - location: scripts/restart_apache.sh
-      timeout: 300
-      runas: root
+on:
+  push:
+    branches:
+      - main  # or change to your default branch
+
+jobs:
+  deploy:
+    name: Build and Deploy to Amazon ECS
+    runs-on: ubuntu-latest
+
+    env:
+      AWS_REGION: us-east-2
+      ECR_REPOSITORY: oxer
+      ECS_CLUSTER: cafee
+      ECS_SERVICE: Cafee
+      CONTAINER_NAME: oxer
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v3
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Log in to Amazon ECR
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Build, tag, and push image to ECR
+        run: |
+          IMAGE_URI="${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_REPOSITORY}:latest"
+          docker build -t $IMAGE_URI .
+          docker push $IMAGE_URI
+        env:
+          AWS_REGION: ${{ env.AWS_REGION }}
+
+      - name: Create new ECS task definition revision and deploy
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        with:
+          service: ${{ env.ECS_SERVICE }}
+          cluster: ${{ env.ECS_CLUSTER }}
+          wait-for-service-stability: true
+          task-definition: |
+            {
+              "family": "${{ env.ECS_SERVICE }}",
+              "containerDefinitions": [
+                {
+                  "name": "${{ env.CONTAINER_NAME }}",
+                  "image": "${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/${{ env.ECR_REPOSITORY }}:latest",
+                  "memory": 512,
+                  "cpu": 256,
+                  "essential": true,
+                  "portMappings": [
+                    {
+                      "containerPort": 80,
+                      "hostPort": 80
+                    }
+                  ]
+                }
+              ]
+            }
